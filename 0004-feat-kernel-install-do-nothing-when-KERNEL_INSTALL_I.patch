@@ -1,7 +1,7 @@
-From f86d5ff72868e9df7d255e3c5e938a9e339f09fa Mon Sep 17 00:00:00 2001
+From c6d18c3c71597e78572378fc4dde391f1845b8bd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
 Date: Tue, 18 Jan 2022 18:08:42 +0100
-Subject: [PATCH 01/10] feat(kernel-install): do nothing when
+Subject: [PATCH 4/6] feat(kernel-install): do nothing when
  $KERNEL_INSTALL_INITRD_GENERATOR says so
 
 dracut may be installed without being actually used. This is very common in

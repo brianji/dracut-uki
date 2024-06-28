@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 Name: dracut
-Version: 101
+Version: 102
 Release: 1%{?dist}
 
 Summary: Initramfs generator using udev
@@ -22,75 +22,24 @@ URL: https://github.com/dracut-ng/dracut-ng/wiki/
 Source0: https://github.com/dracut-ng/dracut-ng/archive/refs/tags/%{version}.tar.gz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
-# feat(kernel-install): do nothing when $KERNEL_INSTALL_INITRD_GENERATOR says so
-# Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Patch1:  0001-feat-kernel-install-do-nothing-when-KERNEL_INSTALL_I.patch
-# fix(kernel-install): do not generate an initrd when one was specified
-# Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Patch2:  0002-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
-# refactor(cms): use zdev to simplify handling CMSDASD=... boot option
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch3:  0003-refactor-cms-use-zdev-to-simplify-handling-CMSDASD-..patch
-# refactor(cms): use consolidated zfcp config with zdev from s390-tools
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch4:  0004-refactor-cms-use-consolidated-zfcp-config-with-zdev-.patch
-# refactor(cms): use consolidated dasd config with zdev from s390-tools
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch5:  0005-refactor-cms-use-consolidated-dasd-config-with-zdev-.patch
-# refactor(cms): use consolidated network config with zdev from s390-tools
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch6:  0006-refactor-cms-use-consolidated-network-config-with-zd.patch
-# refactor(cms): remove now unnecessary inclusion of full s390utils-base
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch7:  0007-refactor-cms-remove-now-unnecessary-inclusion-of-ful.patch
-# feat(zfcp_rules): remove zfcp handling consolidated in s390-tools
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch8:  0008-feat-zfcp_rules-remove-zfcp-handling-consolidated-in.patch
-# feat(zfcp): minimize zfcp handling consolidated in s390-tools
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch9:  0009-feat-zfcp-minimize-zfcp-handling-consolidated-in-s39.patch
-# feat(dasd_rules): remove dasd handling consolidated in s390-tools
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch10: 0010-feat-dasd_rules-remove-dasd-handling-consolidated-in.patch
-# feat(dasd_mod): minimize dasd handling consolidated in s390-tools
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch11: 0011-feat-dasd_mod-minimize-dasd-handling-consolidated-in.patch
-# feat(dasd): minimize dasd handling consolidated in s390-tools
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch12: 0012-feat-dasd-minimize-dasd-handling-consolidated-in-s39.patch
-# feat(znet): use zdev for consolidated device configuration
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch13: 0013-feat-znet-use-zdev-for-consolidated-device-configura.patch
-# docs(dracut.cmdline): generalize description of rd.znet
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch14: 0014-docs-dracut.cmdline-generalize-description-of-rd.zne.patch
-# feat(qeth_rules): remove qeth handling consolidated in 95znet
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch15: 0015-feat-qeth_rules-remove-qeth-handling-consolidated-in.patch
-# fix(znet): append to udev rules so each rd.znet_ifname is effective
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch16: 0016-fix-znet-append-to-udev-rules-so-each-rd.znet_ifname.patch
-# refactor(ifcfg): delete code duplication using iface_get_subchannels()
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch17: 0017-refactor-ifcfg-delete-code-duplication-using-iface_g.patch
-# feat(ifcfg): minimize s390-specific network configuration aspects
-# Author: Steffen Maier <maier@linux.ibm.com>
-Patch18: 0018-feat-ifcfg-minimize-s390-specific-network-configurat.patch
-# fix(dracut): move hooks directory from /usr/lib to /var/lib
-# Author: Laszlo Gombos <laszlo.gombos@gmail.com>
-Patch19: 0019-fix-dracut-move-hooks-directory-from-usr-lib-to-var-.patch
-# fix(systemd): explicitly install some libs that will not be statically included
-# Author: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
-Patch20: 0020-fix-systemd-explicitly-install-some-libs-that-will-n.patch
-# fix(nvmf): move /etc/nvme/host{nqn,id} requirement to hostonly
-# Author: Tomas Bzatek <tbzatek@redhat.com>
-Patch21: 0021-fix-nvmf-move-etc-nvme-host-nqn-id-requirement-to-ho.patch
 # feat(hwdb): add hwdb module to install hwdb.bin on demand
 # Author: Pavel Valena <pvalena@redhat.com>
-Patch22: 0022-feat-hwdb-add-hwdb-module-to-install-hwdb.bin-on-dem.patch
+Patch0001:0001-feat-hwdb-add-hwdb-module-to-install-hwdb.bin-on-dem.patch
 # fix(rngd): install system service file
 # Author: Pavel Valena <pvalena@redhat.com>
-Patch23: 0023-fix-rngd-install-system-service-file.patch
+Patch0002:0002-fix-rngd-install-system-service-file.patch
+# revert: "fix(install.d): correctly install pre-genned image and die if no args"
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0003:0003-revert-fix-install.d-correctly-install-pre-genned-im.patch
+# feat(kernel-install): do nothing when $KERNEL_INSTALL_INITRD_GENERATOR says so
+# Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Patch0004:0004-feat-kernel-install-do-nothing-when-KERNEL_INSTALL_I.patch
+# fix(kernel-install): do not generate an initrd when one was specified
+# Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Patch0005:0005-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
+# fix(crypt): decryption when rd.luks.name is set
+# Author: Laszlo Gombos <laszlo.gombos@gmail.com>
+Patch0006:0006-fix-crypt-decryption-when-rd.luks.name-is-set.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -322,6 +271,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01fips
 %{dracutlibdir}/modules.d/01systemd-ac-power
 %{dracutlibdir}/modules.d/01systemd-ask-password
+%{dracutlibdir}/modules.d/01systemd-bsod
 %{dracutlibdir}/modules.d/01systemd-coredump
 %{dracutlibdir}/modules.d/01systemd-creds
 %{dracutlibdir}/modules.d/01systemd-hostnamed
@@ -374,9 +324,12 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/90mdraid
 %{dracutlibdir}/modules.d/90multipath
 %{dracutlibdir}/modules.d/90nvdimm
+%{dracutlibdir}/modules.d/90numlock
 %{dracutlibdir}/modules.d/90overlayfs
 %{dracutlibdir}/modules.d/90ppcmac
+%{dracutlibdir}/modules.d/90pcmcia
 %{dracutlibdir}/modules.d/90qemu
+%{dracutlibdir}/modules.d/90systemd-cryptsetup
 %{dracutlibdir}/modules.d/91crypt-gpg
 %{dracutlibdir}/modules.d/91crypt-loop
 %{dracutlibdir}/modules.d/91fido2
@@ -491,6 +444,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Fri Jun 28 2024 Pavel Valena <pvalena@redhat.com> - 102-1
+- Update to dracut 102.
+
 * Thu May 16 2024 Pavel Valena <pvalena@redhat.com> - 101-1
 - Update to dracut 101.
 

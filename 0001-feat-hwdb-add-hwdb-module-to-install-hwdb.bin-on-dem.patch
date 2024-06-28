@@ -1,8 +1,7 @@
-From 0b65ac224d831cc96da940cce510523c7276a5ec Mon Sep 17 00:00:00 2001
+From 3bcb0a9f06bac7fa62dc7241860deb8b671f17cd Mon Sep 17 00:00:00 2001
 From: Pavel Valena <pvalena@redhat.com>
 Date: Tue, 25 Apr 2023 14:56:59 +0200
-Subject: [PATCH 22/23] feat(hwdb): add hwdb module to install hwdb.bin on
- demand
+Subject: [PATCH 1/6] feat(hwdb): add hwdb module to install hwdb.bin on demand
 
 Module to install hwdb.bin. Further extensions might make only selected
 part of hwdb installable to save space. The module is not included by default.

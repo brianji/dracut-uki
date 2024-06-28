@@ -1,7 +1,7 @@
-From 9df3cb58a19f38157a615c311356cfd6ae55d2d7 Mon Sep 17 00:00:00 2001
+From d14d724620fe4810930d1c2f07d10fa6b8bc9557 Mon Sep 17 00:00:00 2001
 From: Pavel Valena <pvalena@redhat.com>
 Date: Sun, 23 Jul 2023 19:44:17 +0200
-Subject: [PATCH 23/23] fix(rngd): install system service file
+Subject: [PATCH 2/6] fix(rngd): install system service file
 
 as there's no reason to keep a copy; there shouldn't be any modifications.
 
