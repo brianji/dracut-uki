@@ -24,22 +24,22 @@ Source0: https://github.com/dracut-ng/dracut-ng/archive/refs/tags/%{version}.tar
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # feat(hwdb): add hwdb module to install hwdb.bin on demand
 # Author: Pavel Valena <pvalena@redhat.com>
-Patch0001:0001-feat-hwdb-add-hwdb-module-to-install-hwdb.bin-on-dem.patch
+Patch0001: 0001-feat-hwdb-add-hwdb-module-to-install-hwdb.bin-on-dem.patch
 # fix(rngd): install system service file
 # Author: Pavel Valena <pvalena@redhat.com>
-Patch0002:0002-fix-rngd-install-system-service-file.patch
+Patch0002: 0002-fix-rngd-install-system-service-file.patch
 # revert: "fix(install.d): correctly install pre-genned image and die if no args"
 # Author: Pavel Valena <pvalena@redhat.com>
-Patch0003:0003-revert-fix-install.d-correctly-install-pre-genned-im.patch
+Patch0003: 0003-revert-fix-install.d-correctly-install-pre-genned-im.patch
 # feat(kernel-install): do nothing when $KERNEL_INSTALL_INITRD_GENERATOR says so
 # Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Patch0004:0004-feat-kernel-install-do-nothing-when-KERNEL_INSTALL_I.patch
+Patch0004: 0004-feat-kernel-install-do-nothing-when-KERNEL_INSTALL_I.patch
 # fix(kernel-install): do not generate an initrd when one was specified
 # Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Patch0005:0005-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
+Patch0005: 0005-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
 # fix(crypt): decryption when rd.luks.name is set
 # Author: Laszlo Gombos <laszlo.gombos@gmail.com>
-Patch0006:0006-fix-crypt-decryption-when-rd.luks.name-is-set.patch
+Patch0006: 0006-fix-crypt-decryption-when-rd.luks.name-is-set.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
