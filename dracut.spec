@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 102
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -40,6 +40,12 @@ Patch0005: 0005-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
 # fix(crypt): decryption when rd.luks.name is set
 # Author: Laszlo Gombos <laszlo.gombos@gmail.com>
 Patch0006: 0006-fix-crypt-decryption-when-rd.luks.name-is-set.patch
+# fix: incorrectly applied patch in commit c6d18c3c71597e78572378fc4dde391f1845b8
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0007: 0007-fix-incorrectly-applied-patch-in-commit-c6d18c3c7159.patch
+# revert: "fix(crypt): unlock encrypted devices by default during boot"
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch0008: 0008-revert-fix-crypt-unlock-encrypted-devices-by-default.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -444,6 +450,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Sat Jul 13 2024 Pavel Valena <pvalena@redhat.com> - 102-2
+- Fixes for rhbz#2276271, rhbz#2295215
+
 * Fri Jun 28 2024 Pavel Valena <pvalena@redhat.com> - 102-1
 - Update to dracut 102.
 

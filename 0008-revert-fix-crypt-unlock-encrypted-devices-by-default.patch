@@ -1,0 +1,29 @@
+From 93937d805f8166d9f708f9163fc93839fc1437d3 Mon Sep 17 00:00:00 2001
+From: Pavel Valena <pvalena@redhat.com>
+Date: Thu, 11 Jul 2024 16:24:14 +0200
+Subject: [PATCH 8/8] revert: "fix(crypt): unlock encrypted devices by default
+ during boot"
+
+This reverts commit 2339acfaeee60d6bb26a1103db2e53bc8f9cb2d1.
+
+Resolves: rhbz#2295215
+---
+ modules.d/90crypt/parse-crypt.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules.d/90crypt/parse-crypt.sh b/modules.d/90crypt/parse-crypt.sh
+index 9567a4a9..e46e347a 100755
+--- a/modules.d/90crypt/parse-crypt.sh
++++ b/modules.d/90crypt/parse-crypt.sh
+@@ -174,7 +174,7 @@ else
+                 } >> "$hookdir/emergency/90-crypt.sh"
+             fi
+         done
+-    elif getargbool 1 rd.auto && [ -z "$(getargs rd.luks.name)" ]; then
++    elif getargbool 0 rd.auto; then
+         if [ -z "$DRACUT_SYSTEMD" ]; then
+             {
+                 printf -- 'ENV{ID_FS_TYPE}=="crypto_LUKS", RUN+="%s ' "$(command -v initqueue)"
+-- 
+2.42.0
+
