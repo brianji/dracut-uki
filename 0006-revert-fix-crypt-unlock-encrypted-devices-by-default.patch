@@ -1,22 +1,26 @@
-From 6cb58e86ae65cf9922023b12e889446323a89080 Mon Sep 17 00:00:00 2001
-From: Laszlo Gombos <laszlo.gombos@gmail.com>
-Date: Sat, 15 Jun 2024 15:21:44 -0400
-Subject: [PATCH 6/6] fix(crypt): decryption when rd.luks.name is set
+From 8b1f75375bbbd511dca103b185eaed01a51289aa Mon Sep 17 00:00:00 2001
+From: Pavel Valena <pvalena@redhat.com>
+Date: Thu, 11 Jul 2024 16:24:14 +0200
+Subject: [PATCH 6/6] revert: "fix(crypt): unlock encrypted devices by default
+ during boot"
 
+This reverts commit 2339acfaeee60d6bb26a1103db2e53bc8f9cb2d1.
+
+Resolves: rhbz#2295215
 ---
  modules.d/90crypt/parse-crypt.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/90crypt/parse-crypt.sh b/modules.d/90crypt/parse-crypt.sh
-index 39fc6d21..9567a4a9 100755
+index 9567a4a9..e46e347a 100755
 --- a/modules.d/90crypt/parse-crypt.sh
 +++ b/modules.d/90crypt/parse-crypt.sh
 @@ -174,7 +174,7 @@ else
                  } >> "$hookdir/emergency/90-crypt.sh"
              fi
          done
--    elif getargbool 1 rd.auto; then
-+    elif getargbool 1 rd.auto && [ -z "$(getargs rd.luks.name)" ]; then
+-    elif getargbool 1 rd.auto && [ -z "$(getargs rd.luks.name)" ]; then
++    elif getargbool 0 rd.auto; then
          if [ -z "$DRACUT_SYSTEMD" ]; then
              {
                  printf -- 'ENV{ID_FS_TYPE}=="crypto_LUKS", RUN+="%s ' "$(command -v initqueue)"

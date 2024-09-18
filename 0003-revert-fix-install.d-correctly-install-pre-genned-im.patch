@@ -1,4 +1,4 @@
-From 6fa596ca039300e5f4bb3cca14768976efe95eac Mon Sep 17 00:00:00 2001
+From fa0695d5bf7a698fedb39b1b5ab7fc3ff521705e Mon Sep 17 00:00:00 2001
 From: Pavel Valena <pvalena@redhat.com>
 Date: Wed, 12 Jun 2024 06:30:42 +0200
 Subject: [PATCH 3/6] revert: "fix(install.d): correctly install pre-genned

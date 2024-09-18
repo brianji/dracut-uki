@@ -7,8 +7,8 @@
 %global __requires_exclude pkg-config
 
 Name: dracut
-Version: 102
-Release: 3%{?dist}
+Version: 103
+Release: 1%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -37,15 +37,9 @@ Patch0004: 0004-feat-kernel-install-do-nothing-when-KERNEL_INSTALL_I.patch
 # fix(kernel-install): do not generate an initrd when one was specified
 # Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
 Patch0005: 0005-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
-# fix(crypt): decryption when rd.luks.name is set
-# Author: Laszlo Gombos <laszlo.gombos@gmail.com>
-Patch0006: 0006-fix-crypt-decryption-when-rd.luks.name-is-set.patch
-# fix: incorrectly applied patch in commit c6d18c3c71597e78572378fc4dde391f1845b8
-# Author: Pavel Valena <pvalena@redhat.com>
-Patch0007: 0007-fix-incorrectly-applied-patch-in-commit-c6d18c3c7159.patch
 # revert: "fix(crypt): unlock encrypted devices by default during boot"
 # Author: Pavel Valena <pvalena@redhat.com>
-Patch0008: 0008-revert-fix-crypt-unlock-encrypted-devices-by-default.patch
+Patch0006: 0006-revert-fix-crypt-unlock-encrypted-devices-by-default.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -450,6 +444,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Mon Sep 16 2024 Pavel Valena <pvalena@redhat.com> - 103-1
+- Update to dracut 103.
+
 * Wed Jul 17 2024 Fedora Release Engineering <releng@fedoraproject.org> - 102-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
 
