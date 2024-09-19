@@ -24,22 +24,28 @@ Source0: https://github.com/dracut-ng/dracut-ng/archive/refs/tags/%{version}.tar
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # feat(hwdb): add hwdb module to install hwdb.bin on demand
 # Author: Pavel Valena <pvalena@redhat.com>
-Patch0001: 0001-feat-hwdb-add-hwdb-module-to-install-hwdb.bin-on-dem.patch
+Patch1:  0001-feat-hwdb-add-hwdb-module-to-install-hwdb.bin-on-dem.patch
 # fix(rngd): install system service file
 # Author: Pavel Valena <pvalena@redhat.com>
-Patch0002: 0002-fix-rngd-install-system-service-file.patch
+Patch2:  0002-fix-rngd-install-system-service-file.patch
 # revert: "fix(install.d): correctly install pre-genned image and die if no args"
 # Author: Pavel Valena <pvalena@redhat.com>
-Patch0003: 0003-revert-fix-install.d-correctly-install-pre-genned-im.patch
+Patch3:  0003-revert-fix-install.d-correctly-install-pre-genned-im.patch
 # feat(kernel-install): do nothing when $KERNEL_INSTALL_INITRD_GENERATOR says so
 # Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Patch0004: 0004-feat-kernel-install-do-nothing-when-KERNEL_INSTALL_I.patch
+Patch4:  0004-feat-kernel-install-do-nothing-when-KERNEL_INSTALL_I.patch
 # fix(kernel-install): do not generate an initrd when one was specified
 # Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Patch0005: 0005-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
+Patch5:  0005-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
 # revert: "fix(crypt): unlock encrypted devices by default during boot"
 # Author: Pavel Valena <pvalena@redhat.com>
-Patch0006: 0006-revert-fix-crypt-unlock-encrypted-devices-by-default.patch
+Patch6:  0006-revert-fix-crypt-unlock-encrypted-devices-by-default.patch
+# feat(fips-crypto-policies): make c-p follow FIPS mode automatically
+# Author: Clemens Lang <cllang@redhat.com>
+Patch7:  0007-feat-fips-crypto-policies-make-c-p-follow-FIPS-mode-.patch
+# fix(fips-crypto-policies): make it depend on fips dracut module
+# Author: Jo Zzsi <jozzsicsataban@gmail.com>
+Patch8:  0008-fix-fips-crypto-policies-make-it-depend-on-fips-drac.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -53,6 +59,7 @@ BuildRequires: gcc
 BuildRequires: pkgconfig
 BuildRequires: systemd
 BuildRequires: bash-completion
+BuildRequires: cargo
 
 %if %{with doc}
 BuildRequires: docbook-style-xsl docbook-dtds libxslt
@@ -63,6 +70,8 @@ Obsoletes: dracut-fips <= 047
 Provides:  dracut-fips = %{version}-%{release}
 Obsoletes: dracut-fips-aesni <= 047
 Provides:  dracut-fips-aesni = %{version}-%{release}
+
+Provides: bundled(crate(crosvm)) = 0.1.0
 
 Requires: bash >= 4
 Requires: coreutils
@@ -176,6 +185,7 @@ cp %{SOURCE1} .
 %configure  --systemdsystemunitdir=%{_unitdir} \
             --bashcompletiondir=$(pkg-config --variable=completionsdir bash-completion) \
             --libdir=%{_prefix}/lib \
+            --enable-dracut-cpio \
 %if %{without doc}
             --disable-documentation \
 %endif
@@ -244,6 +254,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/dracut-install
 %{dracutlibdir}/dracut-util
 %{dracutlibdir}/skipcpio
+%{dracutlibdir}/dracut-cpio
 %config(noreplace) %{_sysconfdir}/dracut.conf
 %{dracutlibdir}/dracut.conf.d/01-dist.conf
 %dir %{_sysconfdir}/dracut.conf.d
@@ -269,6 +280,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/00warpclock
 %endif
 %{dracutlibdir}/modules.d/01fips
+%{dracutlibdir}/modules.d/01fips-crypto-policies
 %{dracutlibdir}/modules.d/01systemd-ac-power
 %{dracutlibdir}/modules.d/01systemd-ask-password
 %{dracutlibdir}/modules.d/01systemd-bsod
@@ -446,6 +458,10 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %changelog
 * Mon Sep 16 2024 Pavel Valena <pvalena@redhat.com> - 103-1
 - Update to dracut 103.
+- build: enable dracut-cpio binary
+- feat(fips-crypto-policies): make c-p follow FIPS mode automatically
+- fix(fips-crypto-policies): make it depend on fips dracut module
+- build: package fips-crypto-policies module
 
 * Wed Jul 17 2024 Fedora Release Engineering <releng@fedoraproject.org> - 102-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
