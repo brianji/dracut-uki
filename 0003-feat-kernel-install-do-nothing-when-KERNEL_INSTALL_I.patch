@@ -1,7 +1,7 @@
-From afb0d67f67e345971b0847da0e4126511706c7e7 Mon Sep 17 00:00:00 2001
+From 0819b749af6367a1d4bdf648bdf4d7c26dbaf939 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
 Date: Tue, 18 Jan 2022 18:08:42 +0100
-Subject: [PATCH 4/6] feat(kernel-install): do nothing when
+Subject: [PATCH 3/5] feat(kernel-install): do nothing when
  $KERNEL_INSTALL_INITRD_GENERATOR says so
 
 dracut may be installed without being actually used. This is very common in
@@ -51,7 +51,7 @@ index 441414ac..3f961b11 100755
      # No layout information, use users --uefi/--no-uefi preference
      UEFI_OPTS=""
 diff --git a/install.d/51-dracut-rescue.install b/install.d/51-dracut-rescue.install
-index aa0ccdc5..5310229e 100755
+index 9312e242..decee283 100755
 --- a/install.d/51-dracut-rescue.install
 +++ b/install.d/51-dracut-rescue.install
 @@ -7,6 +7,12 @@ KERNEL_VERSION="$2"
@@ -68,5 +68,5 @@ index aa0ccdc5..5310229e 100755
      suffix=$1
      shift
 -- 
-2.42.0
+2.47.1
 

@@ -1,0 +1,27 @@
+From 74953e5b3527ce3eb27507eaddb3dbcfe82a0ec8 Mon Sep 17 00:00:00 2001
+From: Pavel Valena <pvalena@redhat.com>
+Date: Wed, 29 Jan 2025 23:26:22 +0100
+Subject: [PATCH 9/9] feat(systemd-battery-check): always include the module if
+ possible
+
+---
+ modules.d/01systemd-battery-check/module-setup.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/modules.d/01systemd-battery-check/module-setup.sh b/modules.d/01systemd-battery-check/module-setup.sh
+index 64cdd0a2..4a24d18c 100755
+--- a/modules.d/01systemd-battery-check/module-setup.sh
++++ b/modules.d/01systemd-battery-check/module-setup.sh
+@@ -7,8 +7,7 @@ check() {
+     # If the binary(s) requirements are not fulfilled the module can't be installed
+     require_binaries "$systemdutildir"/systemd-battery-check || return 1
+ 
+-    # Return 255 to only include the module, if another module requires it.
+-    return 255
++    return 0
+ }
+ 
+ # Module dependency requirements.
+-- 
+2.47.1
+
