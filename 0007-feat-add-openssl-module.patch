@@ -1,7 +1,7 @@
-From 7c0bdffee7952397cf32e564021d1560ad533994 Mon Sep 17 00:00:00 2001
+From b02ea5beb945bb2fb56aaeccc23cd1f35c77c7c9 Mon Sep 17 00:00:00 2001
 From: Pavel Valena <pvalena@redhat.com>
 Date: Mon, 20 Jan 2025 14:16:38 +0100
-Subject: [PATCH 11/11] feat: add openssl module
+Subject: [PATCH 7/9] feat: add openssl module
 
 + fix(ossl): build failure bellow resolved
 
@@ -68,12 +68,12 @@ and also fix CFLAGS in case of std=c99.
  create mode 100644 src/ossl/tests/files/providers.cnf.expected
 
 diff --git a/Makefile b/Makefile
-index bcb2bc8f..51095b0a 100644
+index 5ce30d5f..dd12e8cc 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -50,7 +50,7 @@ manpages = $(man1pages) $(man5pages) $(man7pages) $(man8pages)
  
- .PHONY: install clean archive testimage test all check AUTHORS CONTRIBUTORS doc
+ .PHONY: install clean archive test all check AUTHORS CONTRIBUTORS doc
  
 -all: dracut.pc dracut-install src/skipcpio/skipcpio dracut-util
 +all: dracut.pc dracut-install src/skipcpio/skipcpio dracut-util ossl-config ossl-files
@@ -96,7 +96,7 @@ index bcb2bc8f..51095b0a 100644
  .PHONY: indent-c
  indent-c:
  	astyle -n --quiet --options=.astylerc $(wildcard *.[ch] */*.[ch] src/*/*.[ch])
-@@ -199,15 +208,21 @@ endif
+@@ -210,15 +219,21 @@ endif
  			$(DESTDIR)$(systemdsystemunitdir)/initrd.target.wants/$$i; \
  		done \
  	fi
@@ -121,10 +121,10 @@ index bcb2bc8f..51095b0a 100644
  ifeq ($(enable_dracut_cpio),yes)
  	install -m 0755 dracut-cpio $(DESTDIR)$(pkglibdir)/dracut-cpio
  endif
-@@ -233,7 +248,9 @@ clean:
- 	$(RM) $(manpages)
+@@ -251,7 +266,9 @@ clean:
  	$(RM) dracut.pc
  	$(RM) dracut-cpio src/dracut-cpio/target/release/dracut-cpio*
+ 	$(RM) -rf build/ doc_site/modules/ROOT/pages/man/*
 +	$(RM) ossl-files ossl-config
  	$(MAKE) -C test clean
 +	$(MAKE) -C src/ossl clean
@@ -132,7 +132,7 @@ index bcb2bc8f..51095b0a 100644
  syncheck:
  	@ret=0;for i in dracut-initramfs-restore.sh modules.d/*/*.sh; do \
 diff --git a/modules.d/01fips/module-setup.sh b/modules.d/01fips/module-setup.sh
-index a497ac5c..d573b290 100755
+index ed4ef20b..312acd94 100755
 --- a/modules.d/01fips/module-setup.sh
 +++ b/modules.d/01fips/module-setup.sh
 @@ -5,6 +5,10 @@ check() {
@@ -1042,5 +1042,5 @@ index 00000000..23b1b7de
 +/usr/lib64/ossl-modules/pkcs11.so
 +/usr/lib64/ossl-modules/oqsprovider.so.0.6.0
 -- 
-2.48.1
+2.49.0
 

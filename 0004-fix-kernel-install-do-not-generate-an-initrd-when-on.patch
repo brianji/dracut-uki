@@ -1,7 +1,7 @@
-From d3b21efa71676b7d8d023cc360b2d8f8a3a477b7 Mon Sep 17 00:00:00 2001
+From d7cac196ff2fe4010bfde7e42b2c54837494dff4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
 Date: Tue, 18 Jan 2022 18:58:58 +0100
-Subject: [PATCH 4/5] fix(kernel-install): do not generate an initrd when one
+Subject: [PATCH 4/9] fix(kernel-install): do not generate an initrd when one
  was specified
 
 According to the synopsis, kernel-install can be called with an
@@ -35,5 +35,5 @@ index 3f961b11..076b4f5e 100755
              IMAGE_PREGENERATED=${KERNEL_IMAGE%/*}/uki.efi
          else
 -- 
-2.47.1
+2.49.0
 
