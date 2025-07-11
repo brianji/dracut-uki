@@ -53,6 +53,10 @@ Patch9:  0009-Revert-feat-fips-include-openssl-s-fips.so-and-opens.patch
 # Author: Adam Williamson <awilliam@redhat.com>
 # https://github.com/dracut-ng/dracut-ng/pull/1436
 Patch10: 0001-Revert-chore-remove-unused-function.patch
+# Revert "feat(systemd-sysusers): run systemd-sysusers as part of the build process"
+# Author: Adam Williamson <awilliam@redhat.com>
+# https://bugzilla.redhat.com/show_bug.cgi?id=2379116
+Patch11: 0001-Revert-feat-systemd-sysusers-run-systemd-sysusers-as.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -319,6 +323,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01systemd-resolved
 %{dracutlibdir}/modules.d/01systemd-sysext
 %{dracutlibdir}/modules.d/01systemd-sysctl
+%{dracutlibdir}/modules.d/01systemd-sysusers
 %{dracutlibdir}/modules.d/01systemd-timedated
 %{dracutlibdir}/modules.d/01systemd-timesyncd
 %{dracutlibdir}/modules.d/01systemd-tmpfiles
@@ -400,7 +405,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/99openssl
 %{dracutlibdir}/modules.d/99shutdown
 %{dracutlibdir}/modules.d/99shell-interpreter
-%{dracutlibdir}/modules.d/99systemd-sysusers
 %attr(0644,root,root) %ghost %config(missingok,noreplace) %{_localstatedir}/log/dracut.log
 %dir %{_sharedstatedir}/initramfs
 %if %{defined _unitdir}
