@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 107
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -482,6 +482,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Fri Jul 11 2025 Adam Williamson <awilliam@redhat.com> - 107-3
+- Revert an upstream change to fix kernel build (#2379116)
+
 * Thu Jul 10 2025 Adam Williamson <awilliam@redhat.com> - 107-2
 - Backport fix to bring back inst_library for anaconda (dracut-ng PR #1436)
 
