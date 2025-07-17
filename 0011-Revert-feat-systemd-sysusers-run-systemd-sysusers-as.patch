@@ -1,8 +1,8 @@
-From 85779805db97235ec26e144e16e7aea2a3e1997f Mon Sep 17 00:00:00 2001
+From f07e2d173fdf77dbf9244d2dfa594576d6ccfb9a Mon Sep 17 00:00:00 2001
 From: Adam Williamson <awilliam@redhat.com>
 Date: Fri, 11 Jul 2025 01:37:09 -0700
-Subject: [PATCH] Revert "feat(systemd-sysusers): run systemd-sysusers as part
- of the build process"
+Subject: [PATCH 11/12] Revert "feat(systemd-sysusers): run systemd-sysusers as
+ part  of the build process"
 
 This reverts commit f3dacc013d90bd2c0bbfa04f5f9b167b65298440.
 It breaks kernel builds on Fedora - see
@@ -94,5 +94,5 @@ index c1ef40cd..00000000
 -    } 3>&1
 -}
 -- 
-2.50.0
+2.50.1
 

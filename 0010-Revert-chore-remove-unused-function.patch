@@ -1,20 +1,22 @@
-From da64b204418753abce4090892831429c03239fa7 Mon Sep 17 00:00:00 2001
+From d8325fefd12d40e27c66740414f5c4c28eb82319 Mon Sep 17 00:00:00 2001
 From: Adam Williamson <awilliam@redhat.com>
 Date: Thu, 10 Jul 2025 10:33:21 -0700
-Subject: [PATCH] Revert "chore: remove unused function"
+Subject: [PATCH 10/12] Revert "chore: remove unused function"
 
 This reverts commit 81ddde54051351ea17dbb84ef6232820f96740af.
 dracut itself may not use inst_library, but external modules do,
 at least anaconda's does.
+
+(cherry picked from commit da64b204418753abce4090892831429c03239fa7)
 ---
  dracut-init.sh | 19 +++++++++++++++++++
  1 file changed, 19 insertions(+)
 
 diff --git a/dracut-init.sh b/dracut-init.sh
-index 89d80fd8..538dd6e2 100755
+index 9be00c56..749801fc 100755
 --- a/dracut-init.sh
 +++ b/dracut-init.sh
-@@ -342,6 +342,25 @@ dracut_instmods() {
+@@ -350,6 +350,25 @@ dracut_instmods() {
      fi
  }
  
@@ -41,5 +43,5 @@ index 89d80fd8..538dd6e2 100755
      local _ret
      if $DRACUT_INSTALL ${dracutsysrootdir:+-r "$dracutsysrootdir"} ${initdir:+-D "$initdir"} ${loginstall:+-L "$loginstall"} ${DRACUT_RESOLVE_DEPS:+-l} ${DRACUT_FIPS_MODE:+-f} "$@"; then
 -- 
-2.50.0
+2.50.1
 
