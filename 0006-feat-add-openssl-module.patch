@@ -1,7 +1,7 @@
-From b02ea5beb945bb2fb56aaeccc23cd1f35c77c7c9 Mon Sep 17 00:00:00 2001
+From add4b58d3505a23d2e30e3aca2e421db627ac8fa Mon Sep 17 00:00:00 2001
 From: Pavel Valena <pvalena@redhat.com>
 Date: Mon, 20 Jan 2025 14:16:38 +0100
-Subject: [PATCH 7/9] feat: add openssl module
+Subject: [PATCH 6/9] feat: add openssl module
 
 + fix(ossl): build failure bellow resolved
 
@@ -14,7 +14,7 @@ and other compiler issues (PIE).
 and also fix CFLAGS in case of std=c99.
 ---
  Makefile                                      |  25 +-
- modules.d/01fips/module-setup.sh              |   4 +
+ modules.d/11fips/module-setup.sh              |   4 +
  modules.d/99openssl/module-setup.sh           |  31 ++
  modules.d/99openssl/openssl-check.sh          |  29 ++
  src/ossl/Makefile                             |  35 +++
@@ -68,10 +68,10 @@ and also fix CFLAGS in case of std=c99.
  create mode 100644 src/ossl/tests/files/providers.cnf.expected
 
 diff --git a/Makefile b/Makefile
-index 5ce30d5f..dd12e8cc 100644
+index 3a40594b..a4b6835c 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -50,7 +50,7 @@ manpages = $(man1pages) $(man5pages) $(man7pages) $(man8pages)
+@@ -67,7 +67,7 @@ manpages = $(man1pages) $(man5pages) $(man7pages) $(man8pages)
  
  .PHONY: install clean archive test all check AUTHORS CONTRIBUTORS doc
  
@@ -79,8 +79,8 @@ index 5ce30d5f..dd12e8cc 100644
 +all: dracut.pc dracut-install src/skipcpio/skipcpio dracut-util ossl-config ossl-files
  
  %.o : %.c
- 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $(KMOD_CFLAGS) $< -o $@
-@@ -88,6 +88,15 @@ util/util: $(UTIL_OBJECTS)
+ 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $(KMOD_CFLAGS) $(SYSTEMD_CFLAGS) $(if $(SYSTEMD_LIBS),-DHAVE_SYSTEMD) $< -o $@
+@@ -105,6 +105,15 @@ util/util: $(UTIL_OBJECTS)
  dracut-util: src/util/util
  	cp -a $< $@
  
@@ -96,9 +96,9 @@ index 5ce30d5f..dd12e8cc 100644
  .PHONY: indent-c
  indent-c:
  	astyle -n --quiet --options=.astylerc $(wildcard *.[ch] */*.[ch] src/*/*.[ch])
-@@ -210,15 +219,21 @@ endif
- 			$(DESTDIR)$(systemdsystemunitdir)/initrd.target.wants/$$i; \
- 		done \
+@@ -250,15 +259,21 @@ endif
+ 		ln -sf ../dracut-initqueue.service \
+ 		$(DESTDIR)$(systemdsystemunitdir)/initrd.target.wants/dracut-initqueue.service; \
  	fi
 -	if [ -f src/install/dracut-install ]; then \
 +	if [ -r src/install/dracut-install ]; then \
@@ -121,7 +121,7 @@ index 5ce30d5f..dd12e8cc 100644
  ifeq ($(enable_dracut_cpio),yes)
  	install -m 0755 dracut-cpio $(DESTDIR)$(pkglibdir)/dracut-cpio
  endif
-@@ -251,7 +266,9 @@ clean:
+@@ -291,7 +306,9 @@ clean:
  	$(RM) dracut.pc
  	$(RM) dracut-cpio src/dracut-cpio/target/release/dracut-cpio*
  	$(RM) -rf build/ doc_site/modules/ROOT/pages/man/*
@@ -131,10 +131,10 @@ index 5ce30d5f..dd12e8cc 100644
  
  syncheck:
  	@ret=0;for i in dracut-initramfs-restore.sh modules.d/*/*.sh; do \
-diff --git a/modules.d/01fips/module-setup.sh b/modules.d/01fips/module-setup.sh
-index ed4ef20b..312acd94 100755
---- a/modules.d/01fips/module-setup.sh
-+++ b/modules.d/01fips/module-setup.sh
+diff --git a/modules.d/11fips/module-setup.sh b/modules.d/11fips/module-setup.sh
+index d1efe19b..4ae4a873 100755
+--- a/modules.d/11fips/module-setup.sh
++++ b/modules.d/11fips/module-setup.sh
 @@ -5,6 +5,10 @@ check() {
      return 255
  }
@@ -1042,5 +1042,5 @@ index 00000000..23b1b7de
 +/usr/lib64/ossl-modules/pkcs11.so
 +/usr/lib64/ossl-modules/oqsprovider.so.0.6.0
 -- 
-2.49.0
+2.50.1
 

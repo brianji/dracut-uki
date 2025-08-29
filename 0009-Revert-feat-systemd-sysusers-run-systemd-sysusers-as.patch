@@ -1,7 +1,7 @@
-From f07e2d173fdf77dbf9244d2dfa594576d6ccfb9a Mon Sep 17 00:00:00 2001
+From 75871f6a0088e7b979f2864c1716ea0a554e9869 Mon Sep 17 00:00:00 2001
 From: Adam Williamson <awilliam@redhat.com>
 Date: Fri, 11 Jul 2025 01:37:09 -0700
-Subject: [PATCH 11/12] Revert "feat(systemd-sysusers): run systemd-sysusers as
+Subject: [PATCH 9/9] Revert "feat(systemd-sysusers): run systemd-sysusers as
  part  of the build process"
 
 This reverts commit f3dacc013d90bd2c0bbfa04f5f9b167b65298440.
@@ -10,11 +10,11 @@ https://bugzilla.redhat.com/show_bug.cgi?id=2379116 .
 ---
  modules.d/01systemd-sysusers/module-setup.sh  | 31 +++++++++++++++++++
  .../01systemd-sysusers/sysusers-dracut.conf   |  2 ++
- modules.d/99systemd-sysusers/module-setup.sh  | 26 ----------------
- 3 files changed, 33 insertions(+), 26 deletions(-)
+ modules.d/68systemd-sysusers/module-setup.sh  | 31 -------------------
+ 3 files changed, 33 insertions(+), 31 deletions(-)
  create mode 100755 modules.d/01systemd-sysusers/module-setup.sh
  create mode 100644 modules.d/01systemd-sysusers/sysusers-dracut.conf
- delete mode 100755 modules.d/99systemd-sysusers/module-setup.sh
+ delete mode 100755 modules.d/68systemd-sysusers/module-setup.sh
 
 diff --git a/modules.d/01systemd-sysusers/module-setup.sh b/modules.d/01systemd-sysusers/module-setup.sh
 new file mode 100755
@@ -61,12 +61,12 @@ index 00000000..9b13364b
 @@ -0,0 +1,2 @@
 +[Unit]
 +ConditionNeedsUpdate=
-diff --git a/modules.d/99systemd-sysusers/module-setup.sh b/modules.d/99systemd-sysusers/module-setup.sh
+diff --git a/modules.d/68systemd-sysusers/module-setup.sh b/modules.d/68systemd-sysusers/module-setup.sh
 deleted file mode 100755
-index c1ef40cd..00000000
---- a/modules.d/99systemd-sysusers/module-setup.sh
+index 477b8e77..00000000
+--- a/modules.d/68systemd-sysusers/module-setup.sh
 +++ /dev/null
-@@ -1,26 +0,0 @@
+@@ -1,31 +0,0 @@
 -#!/bin/bash
 -# This file is part of dracut.
 -# SPDX-License-Identifier: GPL-2.0-or-later
@@ -92,6 +92,11 @@ index c1ef40cd..00000000
 -        set -o pipefail
 -        systemd-sysusers --root="$initdir" 2>&1 >&3 | grep -v "^Creating " >&2
 -    } 3>&1
+-
+-    # systemd-sysusers does not set any permission
+-    # set read and write permission for the current user
+-    [[ -f "$initdir/etc/gshadow" ]] && chmod u+rw "$initdir/etc/gshadow"
+-    [[ -f "$initdir/etc/shadow" ]] && chmod u+rw "$initdir/etc/shadow"
 -}
 -- 
 2.50.1
