@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 108
-Release: 6%{?dist}
+Release: 7%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -58,6 +58,9 @@ Patch11: 0011-fix-partial-revert-for-hostonly-sloppy-mode.patch
 # fix(dracut): use grep -q/-s to silence output/error
 # Author: Coiby Xu <coxu@redhat.com>
 Patch12: 0012-fix-dracut-use-grep-q-s-to-silence-output-error.patch
+# fix(tpm2-tss): add tss user/group in addition to sysusers config
+# Author: Benjamin Drung <benjamin.drung@canonical.com>
+Patch13: 0013-fix-tpm2-tss-add-tss-user-group-in-addition-to-sysus.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -490,6 +493,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Wed Apr 29 2026 Pavel Valena <pvalena@redhat.com> - 108-7
+- fix(tpm2-tss): add tss user/group in addition to sysusers config
+
 * Thu Mar 12 2026 Pavel Valena <pvalena@redhat.com> - 108-6
 - fix(dracut): use grep -q/-s to silence output/error
 
