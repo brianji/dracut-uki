@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 108
-Release: 7%{?dist}
+Release: 8%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -17,9 +17,9 @@ Summary: Initramfs generator using udev
 # except util/* which is GPLv2
 License: GPL-2.0-or-later AND LGPL-2.1-or-later AND GPL-2.0-only
 
-URL: https://github.com/dracut-ng/dracut-ng/wiki/
+URL: https://github.com/dracut-ng/dracut/wiki/
 
-Source0: https://github.com/dracut-ng/dracut-ng/archive/refs/tags/%{version}.tar.gz
+Source0: https://github.com/dracut-ng/dracut/archive/refs/tags/%{version}.tar.gz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # revert: "fix(install.d): correctly install pre-genned image and die if no args"
@@ -61,6 +61,9 @@ Patch12: 0012-fix-dracut-use-grep-q-s-to-silence-output-error.patch
 # fix(tpm2-tss): add tss user/group in addition to sysusers config
 # Author: Benjamin Drung <benjamin.drung@canonical.com>
 Patch13: 0013-fix-tpm2-tss-add-tss-user-group-in-addition-to-sysus.patch
+# fix(network-manager): hostname not set with old systemd service units
+# Author: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
+Patch14: 0014-fix-network-manager-hostname-not-set-with-old-system.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -493,6 +496,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Fri Sep 04 2026 Pavel Valena <pvalena@redhat.com> - 108-8
+- fix(network-manager): hostname not set with old systemd service units
+
 * Wed Apr 29 2026 Pavel Valena <pvalena@redhat.com> - 108-7
 - fix(tpm2-tss): add tss user/group in addition to sysusers config
 

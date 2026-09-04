@@ -1,0 +1,42 @@
+From 3a38802f08e241deed18463d556a8715dd7540bc Mon Sep 17 00:00:00 2001
+From: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
+Date: Mon, 6 Oct 2025 17:41:08 +0200
+Subject: [PATCH 14/14] fix(network-manager): hostname not set with old systemd
+ service units
+
+Commit 83dffc58f606ad7ad47a32716ce240831d7f018f added support for using the new
+systemd services provided by NetworkManager upstream if available, instead of
+the old custom systemd services provided by dracut. Specifically,
+`NetworkManager-config-initrd.service` sets /proc/sys/kernel/hostname if needed,
+that's why the old code doing this in the initqueue hook `nm-run.sh` was
+moved by mistake to the section that is executed when systemd is not present.
+
+Fixes #1743
+
+(cherry picked from commit 9b82d239a4967420fb7139ed164b9ad4d77c25d9)
+---
+ modules.d/35network-manager/nm-run.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/modules.d/35network-manager/nm-run.sh b/modules.d/35network-manager/nm-run.sh
+index 9a67b9128..c03e3a4e1 100755
+--- a/modules.d/35network-manager/nm-run.sh
++++ b/modules.d/35network-manager/nm-run.sh
+@@ -14,10 +14,11 @@ if [ -z "${DRACUT_SYSTEMD-}" ]; then
+             break
+         done
+     fi
++fi
+ 
+-    if [ -s /run/NetworkManager/initrd/hostname ]; then
+-        cat /run/NetworkManager/initrd/hostname > /proc/sys/kernel/hostname
+-    fi
++if [ -e /usr/lib/systemd/system/nm-initrd.service ] \
++    && [ -s /run/NetworkManager/initrd/hostname ]; then
++    cat /run/NetworkManager/initrd/hostname > /proc/sys/kernel/hostname
+ fi
+ 
+ kf_get_string() {
+-- 
+2.55.0
+
