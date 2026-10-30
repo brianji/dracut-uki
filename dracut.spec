@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 108
-Release: 8%{?dist}
+Release: 8.custom%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -64,6 +64,8 @@ Patch13: 0013-fix-tpm2-tss-add-tss-user-group-in-addition-to-sysus.patch
 # fix(network-manager): hostname not set with old systemd service units
 # Author: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
 Patch14: 0014-fix-network-manager-hostname-not-set-with-old-system.patch
+
+Patch15: 0015-debian-initramfs-post-update.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git

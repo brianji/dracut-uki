@@ -1,0 +1,26 @@
+From 7844fbc4737a99a400400f2cf49f135b71e6ee03 Mon Sep 17 00:00:00 2001
+From: rpm-build <rpm-build>
+Date: Fri, 30 Oct 2026 00:34:22 -0400
+Subject: [PATCH 15/15] debian initramfs post update
+
+---
+ dracut.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/dracut.sh b/dracut.sh
+index 45373ef..6301c41 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -2873,4 +2873,9 @@ if [[ -d ${dracutsysrootdir-}/run/systemd/system ]]; then
+     fi
+ fi
+ 
++# Invoke policy-conformant bootloader hooks
++if [ -z "$NO_POST_UPDATE_HOOKS" ] && [ -d /etc/initramfs/post-update.d/ ]; then
++    find /etc/initramfs/post-update.d/ -maxdepth 1 -type f -executable -exec {} "${kernel}" "${outfile}" \;
++fi
++
+ exit 0
+-- 
+2.56.0
+
